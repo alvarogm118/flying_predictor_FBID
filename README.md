@@ -12,4 +12,4 @@ Tras esperar a que todo esté listo y el predictor esté listo, se puede acceder
 Se siguen los pasos para crear la MV, la insalación de Docker dentro de ésta y la clonación del repositorio (git clone https://github.com/alvarogm118/flying_predictor_FBID) con el proyecto: https://cloud.google.com/community/tutorials/docker-compose-on-container-optimized-os 
 Una vez realizados los pasos, el proceso es igual que en el despliegue local, simplemente entrar a la carpeta del repositorio y ejecutar docker-compose up.
 
-Para acceder a la web una vez que esté todo listo sería el siguiente enlace:
+
