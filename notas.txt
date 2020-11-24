@@ -1,0 +1,33 @@
+Para entrar en un contenedor: docker exec -it XXXX bash
+
+Para borrar todas las imagenes: docker rmi -f $(docker images -a -q)
+
+Prueba de crear topic a mano:
+docker exec -it kafka /opt/kafka/bin/kafka-topics.sh \
+	--create \
+	--zookeeper localhost:2181 \
+	--replication-factor 1 \
+	--partitions 1 \
+	--topic flight_delay_classification_request
+
+Para entrenar el modelo, cd en practica_big_data_2019:
+export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-amd64
+export SPARK_HOME=/opt/spark
+python3 resources/train_spark_mllib_model.py .
+
+Para el predictor (directamente al master, en el compose está para hacerlo desde el worker):
+docker exec -it master /spark/bin/spark-submit \
+--class es.upm.dit.ging.predictor.MakePrediction \
+--master local \
+--packages org.mongodb.spark:mongo-spark-connector_2.11:2.4.0,org.apache.spark:spark-sql-kafka-0-10_2.11:2.4.0 \
+/home/flight_prediction/target/scala-2.11/flight_prediction_2.11-0.1.jar
+
+Para arrancar la web (dirección http://0.0.0.0:5000/flights/delays/predict_kafka):
+En el predict_flask, sobre la linea 295 está esto: from sklearn.externals import joblib, dejamos solo import joblib
+Ademas, metemos los requirements directamente en el Dockerfile para que no se repita cada vez que se haga compose-up
+docker exec -it flask export PROJECT_HOME=/home
+docker exec -it flask python3 /home/resources/web/predict_flask.py
+
+
+
+
