@@ -7,7 +7,6 @@ RUN apt-get update -y && \
 
 RUN pip3 install joblib
 RUN pip3 install Flask
-RUN pip3 install apache-airflow
 RUN pip3 install beautifulsoup4
 RUN pip3 install bs4
 RUN pip3 install frozendict
@@ -28,7 +27,6 @@ RUN pip3 install tldextract
 RUN pip3 install wikipedia
 RUN pip3 install findspark
 RUN pip3 install iso8601
-RUN pip3 install notebook>=5.7.8
 
  
  
